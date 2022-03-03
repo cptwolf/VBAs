@@ -1,0 +1,211 @@
+Public Sub OnTime()
+
+
+Dim wb As Workbook
+Dim ws As Worksheet
+
+Set wb = ActiveWorkbook
+Set ws = ActiveSheet
+
+
+wb.Activate
+ws.Select
+
+
+Dim date1, date2, time1, time2 As Integer
+
+
+
+Dim x, x2 As Long
+Dim y As Long
+
+
+'this counts how many rows are being used by the data table
+x = ActiveSheet.UsedRange.Columns.Count
+x2 = ActiveSheet.UsedRange.Columns.Count
+
+y = ActiveSheet.UsedRange.Rows.Count
+
+Dim rangex, rangey As Integer
+
+
+
+'This deletes the columns that are not needed in the data table
+'For rangex = 25 To x
+'Columns(25).EntireColumn.Delete
+'Next rangex
+Columns(25).EntireColumn.Insert
+Columns(25).EntireColumn.Insert
+Columns(25).EntireColumn.Insert
+Columns(25).EntireColumn.Insert
+Columns(25).NumberFormat = "General"
+Columns(26).NumberFormat = "General"
+Columns(27).NumberFormat = "General"
+
+
+'This will seperate out the date
+For rangey = 2 To y
+Range("Y" & rangey, "Y" & rangey).Value = Int((Cells(rangey, "X")))
+Next rangey
+
+
+'reset the value
+rangey = 2
+
+
+'This will seperate out the time
+For rangey = 2 To y
+Range("Z" & rangey, "Z" & rangey).Value = Cells(rangey, "X") - Int((Cells(rangey, "X")))
+Next rangey
+
+
+'this will format the dates to correct data type in column X/T
+ActiveSheet.Range("Y2", "Y" & y).NumberFormat = "mm/dd/yyyy"
+ActiveSheet.Range("T2", "T" & y).NumberFormat = "mm/dd/yyyy"
+
+ActiveSheet.Range("U2", "U" & y).NumberFormat = "General"
+ActiveSheet.Range("Z2", "Z" & y).NumberFormat = "General"
+
+
+
+
+rangex = 2
+
+Dim compdate As Boolean
+
+Dim todayDate As Date
+
+Dim compareStringDate As String
+
+Dim compareDate As Date
+
+Dim difference As Variant
+
+
+
+'First we will need to look at the Dates to compare
+
+'Then we will need to make sure the times are compared
+
+
+For rangex = 2 To y
+
+todayDate = ActiveSheet.Cells(rangex, "Y")
+
+compareStringDate = ActiveSheet.Cells(rangex, "T")
+
+compareDate = CDate(compareStringDate)
+
+Day (compareDate)
+
+Day (todayDate)
+
+difference = DateDiff("d", compareDate, todayDate)
+
+Cells(rangex, 27).Value = difference
+
+
+If (difference >= 1) Then
+Cells(rangex, 28).Value = "Late"
+compdate = True
+
+ElseIf (difference < 0) Then
+Cells(rangex, 28).Value = "ON TIME"
+compdate = False
+
+ElseIf (difference = 0) And (Range("Z" & rangex, "Z" & rangex).Value <= Range("U" & rangex, "U" & rangex).Value) Then
+Cells(rangex, 28).Value = "ON TIME"
+compdate = False
+
+Else
+Cells(rangex, 28).Value = "LATE"
+compdate = True
+
+End If
+
+
+If Range("Z" & rangex, "Z" & rangex).Value = 0 Then
+Cells(rangex, 28).Value = " "
+End If
+
+
+
+ActiveSheet.Range("U2", "U" & y).NumberFormat = "hh:mm"
+ActiveSheet.Range("Z2", "Z" & y).NumberFormat = "hh:mm"
+'Columns("AA").EntireColumn.Delete
+
+
+
+Next
+
+
+Columns("Y").EntireColumn.Delete
+Columns("Y").EntireColumn.Delete
+Columns("Y").EntireColumn.Delete
+
+rangex = 2
+
+
+For rangex = 2 To y
+
+
+If (InStr(Cells(rangex, "AA"), "COS") = 1) Then
+Cells(rangex, "AA").Value = "DELIVERED"
+End If
+
+If (InStr(Cells(rangex, "AA"), "AUD") = 1) Then
+Cells(rangex, "AA").Value = "DELIVERED"
+End If
+
+If (InStr(Cells(rangex, "AA"), "DEL") = 1) Then
+Cells(rangex, "AA").Value = "DELIVERED"
+End If
+
+If (InStr(Cells(rangex, "AA"), "RFI") = 1) Then
+Cells(rangex, "AA").Value = "DELIVERED"
+End If
+
+If (InStr(Cells(rangex, "AA"), "PST") = 1) Then
+Cells(rangex, "AA").Value = "DELIVERED"
+End If
+
+If (InStr(Cells(rangex, "AA"), "AUD") = 1) Then
+Cells(rangex, "AA").Value = "DELIVERED"
+End If
+
+If (InStr(Cells(rangex, "AA"), "POD") = 1) Then
+Cells(rangex, "AA").Value = "DELIVERED"
+End If
+
+If (InStr(Cells(rangex, "AA"), "AAD") = 1) Then
+Cells(rangex, "AA").Value = "ARRIVED AT DESTINATION"
+End If
+
+If (InStr(Cells(rangex, "AA"), "COB") = 1) Then
+Cells(rangex, "AA").Value = "IN-TRANSIT"
+End If
+
+If (InStr(Cells(rangex, "AA"), "DIS") = 1) Then
+Cells(rangex, "AA").Value = "DISPATCHED"
+End If
+
+If (InStr(Cells(rangex, "AA"), "TLD") = 1) Then
+Cells(rangex, "AA").Value = "DISPATCHED"
+End If
+
+If (InStr(Cells(rangex, "AA"), "PUP") = 1) Then
+Cells(rangex, "AA").Value = "PICKED UP"
+End If
+
+If (InStr(Cells(rangex, "AA"), "APD") = 1) Then
+Cells(rangex, "AA").Value = "APPOINTMENT SET"
+End If
+
+If (InStr(Cells(rangex, "AA"), "OFD") = 1) Then
+Cells(rangex, "AA").Value = "OUT FOR DELIVERY"
+End If
+
+Next
+
+
+End Sub
