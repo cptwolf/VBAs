@@ -1,0 +1,166 @@
+Public Sub combinedatayearly()
+
+'data1
+'data2
+
+
+Dim wb As Workbook
+Dim ws As Worksheet
+
+Set wb = ActiveWorkbook
+Set ws = wb.Sheets("Combined")
+Set ws2 = wb.Sheets("Data1")
+Set ws3 = wb.Sheets("Data2")
+
+wb.Activate
+ws.Select
+
+
+Dim x2 As Long
+
+Dim x3 As Long
+
+Dim rowrange As Integer
+
+ws2.Activate
+
+'this counts how many rows are being used by the data table
+x2 = ws2.UsedRange.Rows.Count
+
+'Copy the data
+ws2.range(Cells(x2 - (x2 - 2), 1), Cells(x2, 8)).Copy
+
+'Activate the destination worksheet
+ws.Activate
+
+'Select the target range
+range("L2").Select
+
+'Paste in the target destination
+ActiveSheet.Paste
+
+Application.CutCopyMode = False
+
+Cells(1, 1).Value = "Data Set 2 2018"
+Cells(1, 1).Font.FontStyle = "Bold"
+Cells(1, 1).Font.Size = 20
+
+
+
+ws3.Activate
+
+'this counts how many rows are being used by the data table
+x3 = ws3.UsedRange.Rows.Count
+
+'Copy the data
+ws3.range(Cells(x3 - (x3 - 2), 1), Cells(x3, 8)).Copy
+
+'Activate the destination worksheet
+ws.Activate
+
+'Select the target range
+range("A2").Select
+
+'Paste in the target destination
+ActiveSheet.Paste
+
+Application.CutCopyMode = False
+
+Cells(1, 12).Value = "Data Set 1 2017"
+Cells(1, 12).Font.FontStyle = "Bold"
+Cells(1, 12).Font.Size = 20
+
+
+Cells(x3, 2).Value = Cells(x3 - 1, 2).Value / Cells(x2 - 1, 13).Value
+Cells(x3, 2).NumberFormat = "0.0%"
+Cells(x3, 2).Font.FontStyle = "Bold"
+
+Cells(x3, 4).Value = Cells(x3 - 1, 4).Value / Cells(x2 - 1, 15).Value
+Cells(x3, 4).NumberFormat = "0.0%"
+Cells(x3, 4).Font.FontStyle = "Bold"
+
+Cells(x3, 5).Value = Cells(x3 - 1, 5).Value / Cells(x2 - 1, 16).Value
+Cells(x3, 5).NumberFormat = "0.0%"
+Cells(x3, 5).Font.FontStyle = "Bold"
+
+
+Cells(x3 + 2, 2).Value = "2017"
+
+Cells(x3 + 2, 3).Value = "2018"
+
+Cells(x3 + 3, 1).Value = "COST PER SHIPMENT"
+Cells(x3 + 3, 2).Value = Cells(x2 - 1, 14).Value / Cells(x2 - 1, 13).Value
+Cells(x3 + 3, 3).Value = Cells(x3 - 1, 3).Value / Cells(x3 - 1, 2).Value
+
+Cells(x3 + 4, 1).Value = "REV PER SHIPMENT"
+Cells(x3 + 4, 2).Value = Cells(x2 - 1, 15).Value / Cells(x2 - 1, 13).Value
+Cells(x3 + 4, 3).Value = Cells(x3 - 1, 4).Value / Cells(x3 - 1, 2).Value
+
+
+Cells(x3 + 5, 1).Value = "MARGIN PER SHIPMENT"
+Cells(x3 + 5, 2).Value = Cells(x2 - 1, 16).Value / Cells(x2 - 1, 13).Value
+Cells(x3 + 5, 3).Value = Cells(x3 - 1, 5).Value / Cells(x3 - 1, 2).Value
+
+range(Cells(x3 + 3, 2), Cells(x3 + 5, 3)).NumberFormat = "$#,##0.00"
+
+
+Cells(2, 8).Value = "YOY margin diff"
+
+Dim clientname As String
+Dim rowrange2 As Integer
+
+Dim hlighter As Integer
+
+'this will compare the vendor to the previous dataset
+For rowrange = 3 To (x3 - 2)
+clientname = Cells(rowrange, 1).Value
+
+        For rowrange2 = 3 To (x2 - 2)
+                    
+            If (InStr(Cells(rowrange2, 12).Value, clientname) <> 0 And InStr(clientname, Cells(rowrange2, 12).Value) <> 0 And Len(Cells(rowrange2, 12).Value) = Len(clientname)) Then
+                Cells(rowrange, 8).Value = (Cells(rowrange, 5) / Cells(rowrange2, 16))
+                Cells(rowrange, 8).NumberFormat = "0.0%"
+                Cells(rowrange, 9).Value = (Cells(rowrange, 5) - Cells(rowrange2, 16))
+                Cells(rowrange, 9).NumberFormat = "$#,##0.00"
+                Cells(rowrange2, 12).Interior.ColorIndex = 6
+                    
+                    If (Cells(rowrange, 8).Value < 1) Then
+                        Cells(rowrange, 1).Interior.ColorIndex = 6
+                        Cells(rowrange, 8).Interior.ColorIndex = 6
+                    End If
+                    
+            End If
+                    
+        Next rowrange2
+
+If IsEmpty(Cells(rowrange, 8).Value) = True Then
+Cells(rowrange, 9).Value = Cells(rowrange, 5)
+Cells(rowrange, 9).NumberFormat = "$#,##0.00"
+End If
+
+Next rowrange
+
+
+For hlighter = 3 To (x2 - 2)
+
+If (Cells(hlighter, 12).Interior.ColorIndex <> 6) Then
+Cells(hlighter, 12).Interior.ColorIndex = 45
+Else
+Cells(hlighter, 12).Interior.ColorIndex = 0
+End If
+
+Next hlighter
+
+
+Cells(x3 - 1, 8).Value = WorksheetFunction.Average(range(Cells(x3 - (x3 - 2), 8), Cells(x3 - 2, 8)))
+Cells(x3 - 1, 8).NumberFormat = "0.0%"
+Cells(x3 - 1, 8).Font.FontStyle = "Bold"
+Cells(x3 - 1, 9).Value = WorksheetFunction.Sum(range(Cells(x3 - (x3 - 2), 9), Cells(x3 - 2, 9)))
+Cells(x3 - 1, 9).NumberFormat = "$#,##0.00"
+Cells(x3 - 1, 9).Font.FontStyle = "Bold"
+
+Columns("A:R").AutoFit
+
+
+
+End Sub
