@@ -1,0 +1,319 @@
+Public Sub Performance()
+
+
+Dim wb As Workbook
+Dim ws As Worksheet
+
+Set wb = ActiveWorkbook
+Set ws = ActiveSheet
+
+
+wb.Activate
+ws.Select
+
+
+Dim date1, date2, time1, time2 As Integer
+
+
+Dim x, x2 As Long
+Dim y As Long
+
+
+'this counts how many rows are being used by the data table
+x = ActiveSheet.UsedRange.Columns.Count
+x2 = ActiveSheet.UsedRange.Columns.Count
+
+y = ActiveSheet.UsedRange.Rows.Count
+
+Dim rangex, rangey As Integer
+
+rangex = 2
+
+
+For rangex = 2 To y
+
+If (InStr(Cells(rangex, "F"), "COS") = 1) Then
+Cells(rangex, "F").Value = "DELIVERED"
+End If
+
+If (InStr(Cells(rangex, "F"), "AUD") = 1) Then
+Cells(rangex, "F").Value = "DELIVERED"
+End If
+
+If (InStr(Cells(rangex, "F"), "DEL") = 1) Then
+Cells(rangex, "F").Value = "DELIVERED"
+End If
+
+If (InStr(Cells(rangex, "F"), "RFI") = 1) Then
+Cells(rangex, "F").Value = "DELIVERED"
+End If
+
+If (InStr(Cells(rangex, "F"), "PST") = 1) Then
+Cells(rangex, "F").Value = "DELIVERED"
+End If
+
+If (InStr(Cells(rangex, "F"), "AUD") = 1) Then
+Cells(rangex, "F").Value = "DELIVERED"
+End If
+
+If (InStr(Cells(rangex, "F"), "POD") = 1) Then
+Cells(rangex, "F").Value = "DELIVERED"
+End If
+
+If (InStr(Cells(rangex, "F"), "AAD") = 1) Then
+Cells(rangex, "F").Value = "ARRIVED AT DESTINATION"
+End If
+
+If (InStr(Cells(rangex, "F"), "COB") = 1) Then
+Cells(rangex, "F").Value = "IN-TRANSIT"
+End If
+
+If (InStr(Cells(rangex, "F"), "DIS") = 1) Then
+Cells(rangex, "F").Value = "DISPATCHED"
+End If
+
+If (InStr(Cells(rangex, "F"), "TLD") = 1) Then
+Cells(rangex, "F").Value = "DISPATCHED"
+End If
+
+If (InStr(Cells(rangex, "F"), "PUP") = 1) Then
+Cells(rangex, "F").Value = "PICKED UP"
+End If
+
+If (InStr(Cells(rangex, "F"), "APD") = 1) Then
+Cells(rangex, "F").Value = "APPOINTMENT SET"
+End If
+
+If (InStr(Cells(rangex, "F"), "OFD") = 1) Then
+Cells(rangex, "F").Value = "OUT FOR DELIVERY"
+End If
+
+Next
+
+'This deletes the columns that are not needed in the data table
+
+'Columns(25).EntireColumn.Delete
+
+'Columns(25).EntireColumn.Insert
+'Columns(25).EntireColumn.Insert
+'Columns(25).EntireColumn.Insert
+'Columns(25).EntireColumn.Insert
+'Columns(25).NumberFormat = "General"
+'Columns(26).NumberFormat = "General"
+'Columns(27).NumberFormat = "General"
+
+Columns("J").EntireColumn.Insert
+Columns("J").EntireColumn.Insert
+
+'This will seperate out the date
+For rangey = 2 To y
+Range("J" & rangey, "J" & rangey).Value = Int((Cells(rangey, "I")))
+Next rangey
+
+
+'reset the value
+rangey = 2
+
+
+'This will seperate out the time
+For rangey = 2 To y
+Range("K" & rangey, "K" & rangey).Value = Cells(rangey, "I") - Int((Cells(rangey, "I")))
+Next rangey
+
+
+'this will format the dates to correct data type in column X/T
+ActiveSheet.Range("J2", "J" & y).NumberFormat = "mm/dd/yyyy"
+'ActiveSheet.Range("I2", "I" & y).NumberFormat = "mm/dd/yyyy"
+
+ActiveSheet.Range("K2", "K" & y).NumberFormat = "General"
+'ActiveSheet.Range("Z2", "Z" & y).NumberFormat = "General"
+
+
+Columns("DB").EntireColumn.Insert
+Columns("DB").EntireColumn.Insert
+Columns("DD").EntireColumn.Insert
+Columns("DD").EntireColumn.Insert
+
+'reset the value
+rangey = 2
+
+'This will seperate out the pickup date
+For rangey = 2 To y
+Range("DB" & rangey, "DB" & rangey).Value = Int((Cells(rangey, "DA")))
+Next rangey
+
+'reset the value
+rangey = 2
+
+'This will seperate out the pickup time
+For rangey = 2 To y
+Range("DC" & rangey, "DC" & rangey).Value = Cells(rangey, "DA") - Int((Cells(rangey, "DA")))
+Next rangey
+
+ActiveSheet.Range("DB2", "DB" & y).NumberFormat = "mm/dd/yyyy"
+ActiveSheet.Range("DC2", "DC" & y).NumberFormat = "General"
+
+
+
+rangex = 2
+
+
+Dim compdate As Boolean
+
+Dim todayDate As Date
+
+Dim compareStringDate As String
+
+Dim compareDate As Date
+
+Dim difference As Variant
+
+
+
+'First we will need to look at the Dates to compare
+
+'Then we will need to make sure the times are compared
+
+
+For rangex = 2 To y
+
+
+todayDate = ActiveSheet.Cells(rangex, "J")
+
+compareStringDate = ActiveSheet.Cells(rangex, "DB")
+
+compareDate = CDate(compareStringDate)
+
+Day (compareDate)
+
+Day (todayDate)
+
+difference = DateDiff("d", compareDate, todayDate)
+
+Cells(rangex, "DD").Value = difference
+
+
+If (difference >= 1) Then
+Cells(rangex, "DE").Value = "Late"
+compdate = True
+
+ElseIf (difference < 0) Then
+Cells(rangex, "DE").Value = "ON TIME"
+compdate = False
+
+ElseIf (difference = 0) And (Range("DC" & rangex, "DC" & rangex).Value <= Range("K" & rangex, "K" & rangex).Value) Then
+Cells(rangex, "DE").Value = "ON TIME"
+compdate = False
+
+Else
+Cells(rangex, "DE").Value = "LATE"
+compdate = True
+
+End If
+
+If Range("DC" & rangex, "DC" & rangex).Value = 0 Then
+Cells(rangex, "DE").Value = " "
+End If
+
+
+Next
+
+
+Columns("EE").EntireColumn.Insert
+Columns("EE").EntireColumn.Insert
+Columns("EE").EntireColumn.Insert
+
+'reset the value
+rangey = 2
+
+'This will seperate out the pickup date
+For rangey = 2 To y
+Range("EE" & rangey, "EE" & rangey).Value = Int((Cells(rangey, "ED")))
+Next rangey
+
+'reset the value
+rangey = 2
+
+
+'This will seperate out the time
+For rangey = 2 To y
+Range("EF" & rangey, "EF" & rangey).Value = Cells(rangey, "ED") - Int((Cells(rangey, "ED")))
+Next rangey
+
+
+rangex = 2
+
+
+
+
+'First we will need to look at the Dates to compare
+
+'Then we will need to make sure the times are compared
+
+
+For rangex = 2 To y
+
+
+todayDate = ActiveSheet.Cells(rangex, "J")
+
+compareStringDate = ActiveSheet.Cells(rangex, "EE")
+
+compareDate = CDate(compareStringDate)
+
+Day (compareDate)
+
+Day (todayDate)
+
+difference = DateDiff("d", todayDate, compareDate)
+
+Cells(rangex, "EG").Value = difference
+
+
+
+If Range("EG" & rangex, "EG" & rangex).Value >= 14 Then
+Cells(rangex, "EG").Value = difference - 2
+End If
+
+If Range("EG" & rangex, "EG" & rangex).Value >= 7 Then
+Cells(rangex, "EG").Value = difference - 2
+End If
+
+If Range("EG" & rangex, "EG" & rangex).Value < 0 Then
+Cells(rangex, "EG").Value = " "
+End If
+
+Next
+
+
+
+ActiveSheet.Range("DD2", "D" & y).NumberFormat = "General"
+ActiveSheet.Range("EG2", "EG" & y).NumberFormat = "General"
+
+ActiveSheet.Range("J2", "J" & y).NumberFormat = "mm/dd/yyyy"
+ActiveSheet.Range("EE2", "EE" & y).NumberFormat = "mm/dd/yyyy"
+
+'ActiveSheet.Range("DC2", "DC" & y).NumberFormat = "hh:mm"
+'ActiveSheet.Range("K2", "K" & y).NumberFormat = "hh:mm"
+
+'Columns("DB").EntireColumn.Delete
+'Columns("DC").EntireColumn.Delete
+'Columns("DD").EntireColumn.Delete
+
+Columns("EE").EntireColumn.Delete
+Columns("EE").EntireColumn.Delete
+ActiveSheet.Range("ED2", "ED" & y).NumberFormat = "mm/dd/yyyy"
+
+
+Columns("DB").EntireColumn.Delete
+Columns("DB").EntireColumn.Delete
+Columns("DB").EntireColumn.Delete
+ActiveSheet.Range("DA2", "DA" & y).NumberFormat = "mm/dd/yyyy"
+
+
+Columns("J").EntireColumn.Delete
+Columns("J").EntireColumn.Delete
+ActiveSheet.Range("I2", "I" & y).NumberFormat = "mm/dd/yyyy"
+
+
+End Sub
+
