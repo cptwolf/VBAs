@@ -1,0 +1,452 @@
+Sub FinalizeReport()
+
+Cargowise
+ShipExt
+
+Dim wb As Workbook
+Dim ws As Worksheet
+
+Set wb = ActiveWorkbook
+Set ws = wb.Sheets("CargoWiseRAW")
+
+Dim ws2 As Worksheet
+Set ws2 = wb.Sheets("ShipExtRAW")
+
+Dim ws3 As Worksheet
+Set ws3 = wb.Sheets("Report")
+
+Dim x As Long
+Dim x2 As Long
+Dim x3 As Long
+
+
+wb.Activate
+
+
+ws2.Select
+
+
+
+'this counts how many rows are being used by the data table
+x2 = ActiveSheet.UsedRange.Rows.Count
+
+'ShipExtraxtRAW
+'Copy the data
+ws2.Range(Cells(x2 - 10, 1), Cells(x2, 2)).Copy
+
+'Activate the destination worksheet
+Sheets("Report").Activate
+
+'Select the target range
+Range("A1").Select
+
+'Paste in the target destination
+ActiveSheet.Paste
+
+Application.CutCopyMode = False
+
+
+
+ws.Select
+
+
+'this counts how many rows are being used by the data table
+x = ActiveSheet.UsedRange.Rows.Count
+
+
+'CargoWiseRAW
+'Copy the data
+ws.Range(Cells(x - 8, 1), Cells(x, 2)).Copy
+
+'Activate the destination worksheet
+Sheets("Report").Activate
+
+'Select the target range
+Range("D1").Select
+
+'Paste in the target destination
+ActiveSheet.Paste
+
+Application.CutCopyMode = False
+
+
+
+
+
+Range(Cells(1, 1), Cells(11, 2)).Borders.LineStyle = xlContinuous
+Range(Cells(1, 1), Cells(11, 2)).Font.Bold = True
+
+Range(Cells(1, 4), Cells(9, 5)).Borders.LineStyle = xlContinuous
+Range(Cells(1, 4), Cells(9, 5)).Font.Bold = True
+
+
+ws3.Cells(11, 4).Value = "GRAND TOTAL"
+ws3.Cells(11, 5).Value = ws3.Cells(11, 2).Value + ws3.Cells(9, 5).Value
+
+
+Range(Cells(11, 4), Cells(11, 5)).Borders.LineStyle = xlContinuous
+Range(Cells(11, 4), Cells(11, 5)).Font.Bold = True
+
+
+ws.Select
+
+
+
+'this counts how many rows are being used by the data table
+x = ActiveSheet.UsedRange.Rows.Count
+
+
+'CargoWiseRAW
+'Copy the data
+ws.Range(Cells(x - (x - 1), 1), Cells(x - 9, 8)).Copy
+
+'Activate the destination worksheet
+Sheets("Report").Activate
+
+'Select the target range
+Range("A15").Select
+
+'Paste in the target destination
+ActiveSheet.Paste
+
+Application.CutCopyMode = False
+
+
+
+
+ws2.Select
+
+
+'this counts how many rows are being used by the data table
+x2 = ActiveSheet.UsedRange.Rows.Count
+
+'ShipExtraxtRAW
+'Copy the data
+
+ws2.Range(Cells(x2 - (x2 - 1), 1), Cells(x2 - 11, 9)).Copy
+
+'Activate the destination worksheet
+Sheets("Report").Activate
+x3 = ActiveSheet.UsedRange.Rows.Count
+
+
+'Select the target range
+Range("A" & x3 + 2).Select
+
+
+'Paste in the target destination
+ActiveSheet.Paste
+
+
+Application.CutCopyMode = False
+
+Range(Cells(x3 + 2, 1), Cells(x3 + 2, 9)).Font.Bold = True
+
+
+
+
+
+End Sub
+
+Sub FinalizeReport()
+
+Cargowise
+ShipExt
+
+Dim wb As Workbook
+Dim ws As Worksheet
+
+Set wb = ActiveWorkbook
+Set ws = wb.Sheets("CargoWiseRAW")
+
+Dim ws2 As Worksheet
+Set ws2 = wb.Sheets("ShipExtRAW")
+
+Dim ws3 As Worksheet
+Set ws3 = wb.Sheets("Report")
+
+Dim x As Long
+Dim x2 As Long
+Dim x3 As Long
+
+
+wb.Activate
+
+
+ws2.Select
+
+
+
+'this counts how many rows are being used by the data table
+x2 = ActiveSheet.UsedRange.Rows.Count
+
+'ShipExtraxtRAW
+'Copy the data
+ws2.Range(Cells(x2 - 10, 1), Cells(x2, 2)).Copy
+
+'Activate the destination worksheet
+Sheets("Report").Activate
+
+'Select the target range
+Range("A1").Select
+
+'Paste in the target destination
+ActiveSheet.Paste
+
+Application.CutCopyMode = False
+
+
+
+ws.Select
+
+
+'this counts how many rows are being used by the data table
+x = ActiveSheet.UsedRange.Rows.Count
+
+
+'CargoWiseRAW
+'Copy the data
+ws.Range(Cells(x - 8, 1), Cells(x, 2)).Copy
+
+'Activate the destination worksheet
+Sheets("Report").Activate
+
+'Select the target range
+Range("D1").Select
+
+'Paste in the target destination
+ActiveSheet.Paste
+
+Application.CutCopyMode = False
+
+
+
+
+
+Range(Cells(1, 1), Cells(11, 2)).Borders.LineStyle = xlContinuous
+Range(Cells(1, 1), Cells(11, 2)).Font.Bold = True
+
+Range(Cells(1, 4), Cells(9, 5)).Borders.LineStyle = xlContinuous
+Range(Cells(1, 4), Cells(9, 5)).Font.Bold = True
+
+
+ws3.Cells(11, 4).Value = "GRAND TOTAL"
+ws3.Cells(11, 5).Value = ws3.Cells(11, 2).Value + ws3.Cells(9, 5).Value
+
+
+Range(Cells(11, 4), Cells(11, 5)).Borders.LineStyle = xlContinuous
+Range(Cells(11, 4), Cells(11, 5)).Font.Bold = True
+
+
+ws.Select
+
+
+
+'this counts how many rows are being used by the data table
+x = ActiveSheet.UsedRange.Rows.Count
+
+
+'CargoWiseRAW
+'Copy the data
+ws.Range(Cells(x - (x - 1), 1), Cells(x - 9, 8)).Copy
+
+'Activate the destination worksheet
+Sheets("Report").Activate
+
+'Select the target range
+Range("A15").Select
+
+'Paste in the target destination
+ActiveSheet.Paste
+
+Application.CutCopyMode = False
+
+
+
+
+ws2.Select
+
+
+'this counts how many rows are being used by the data table
+x2 = ActiveSheet.UsedRange.Rows.Count
+
+'ShipExtraxtRAW
+'Copy the data
+
+ws2.Range(Cells(x2 - (x2 - 1), 1), Cells(x2 - 11, 9)).Copy
+
+'Activate the destination worksheet
+Sheets("Report").Activate
+x3 = ActiveSheet.UsedRange.Rows.Count
+
+
+'Select the target range
+Range("A" & x3 + 2).Select
+
+
+'Paste in the target destination
+ActiveSheet.Paste
+
+
+Application.CutCopyMode = False
+
+Range(Cells(x3 + 2, 1), Cells(x3 + 2, 9)).Font.Bold = True
+
+
+
+
+
+End Sub
+
+Sub FinalizeReport()
+
+Cargowise
+ShipExt
+
+Dim wb As Workbook
+Dim ws As Worksheet
+
+Set wb = ActiveWorkbook
+Set ws = wb.Sheets("CargoWiseRAW")
+
+Dim ws2 As Worksheet
+Set ws2 = wb.Sheets("ShipExtRAW")
+
+Dim ws3 As Worksheet
+Set ws3 = wb.Sheets("Report")
+
+Dim x As Long
+Dim x2 As Long
+Dim x3 As Long
+
+
+wb.Activate
+
+
+ws2.Select
+
+
+
+'this counts how many rows are being used by the data table
+x2 = ActiveSheet.UsedRange.Rows.Count
+
+'ShipExtraxtRAW
+'Copy the data
+ws2.Range(Cells(x2 - 10, 1), Cells(x2, 2)).Copy
+
+'Activate the destination worksheet
+Sheets("Report").Activate
+
+'Select the target range
+Range("A1").Select
+
+'Paste in the target destination
+ActiveSheet.Paste
+
+Application.CutCopyMode = False
+
+
+
+ws.Select
+
+
+'this counts how many rows are being used by the data table
+x = ActiveSheet.UsedRange.Rows.Count
+
+
+'CargoWiseRAW
+'Copy the data
+ws.Range(Cells(x - 8, 1), Cells(x, 2)).Copy
+
+'Activate the destination worksheet
+Sheets("Report").Activate
+
+'Select the target range
+Range("D1").Select
+
+'Paste in the target destination
+ActiveSheet.Paste
+
+Application.CutCopyMode = False
+
+
+
+
+
+Range(Cells(1, 1), Cells(11, 2)).Borders.LineStyle = xlContinuous
+Range(Cells(1, 1), Cells(11, 2)).Font.Bold = True
+
+Range(Cells(1, 4), Cells(9, 5)).Borders.LineStyle = xlContinuous
+Range(Cells(1, 4), Cells(9, 5)).Font.Bold = True
+
+
+ws3.Cells(11, 4).Value = "GRAND TOTAL"
+ws3.Cells(11, 5).Value = ws3.Cells(11, 2).Value + ws3.Cells(9, 5).Value
+
+
+Range(Cells(11, 4), Cells(11, 5)).Borders.LineStyle = xlContinuous
+Range(Cells(11, 4), Cells(11, 5)).Font.Bold = True
+
+
+ws.Select
+
+
+
+'this counts how many rows are being used by the data table
+x = ActiveSheet.UsedRange.Rows.Count
+
+
+'CargoWiseRAW
+'Copy the data
+ws.Range(Cells(x - (x - 1), 1), Cells(x - 9, 8)).Copy
+
+'Activate the destination worksheet
+Sheets("Report").Activate
+
+'Select the target range
+Range("A15").Select
+
+'Paste in the target destination
+ActiveSheet.Paste
+
+Application.CutCopyMode = False
+
+
+
+
+ws2.Select
+
+
+'this counts how many rows are being used by the data table
+x2 = ActiveSheet.UsedRange.Rows.Count
+
+'ShipExtraxtRAW
+'Copy the data
+
+ws2.Range(Cells(x2 - (x2 - 1), 1), Cells(x2 - 11, 9)).Copy
+
+'Activate the destination worksheet
+Sheets("Report").Activate
+x3 = ActiveSheet.UsedRange.Rows.Count
+
+
+'Select the target range
+Range("A" & x3 + 2).Select
+
+
+'Paste in the target destination
+ActiveSheet.Paste
+
+
+Application.CutCopyMode = False
+
+Range(Cells(x3 + 2, 1), Cells(x3 + 2, 9)).Font.Bold = True
+
+
+
+
+
+End Sub
+
+
+
